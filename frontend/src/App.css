@@ -1,13 +1,51 @@
+#header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  gap: 10px;
+}
+
+.image {
+  width: 125px;
+  height: auto;
+}
+
+.gaegu-regular {
+  font-family: "Gaegu", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-top: 50px solid;
+  border-image-source: url(src/assets/lace.png);
+  border-image-slice: 200;
+  border-image-repeat: repeat;
 }
 
 #inputs-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5px;
+  gap: 20px;
+  padding: 10px;
+}
+
+#inputs-container input {
+  border: solid #ffc8dc 4px;
+  outline: none;
+  font-size: 20px;
+  flex: 1;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px #ff84b1;
+  font-family: "gaegu";
+  transition: box-shadow 0.3s;
+}
+#inputs-container input:hover {
+  cursor: url(src/assets/link.gif), auto;
+  box-shadow: 3px 3px 3px white;
 }
 
 #column1 {
@@ -18,7 +56,7 @@
 
 #column2 {
   display: flex;
-  gap: 5px;
+  gap: 10px;
 }
 
 #url {
@@ -30,15 +68,48 @@
 }
 
 .urlTable, th, td {
-  border: 1px solid black;
+  border: 5px solid #ffd6df;
+  background: white;
   border-collapse: collapse;
-}
-
-th, td {
+  font-size: 18px;
   padding: 12px 15px;
+  margin-top: 10px;
+  box-shadow: 0 0 10px 1px #ff84b1;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
-input {
-  border-radius: 5px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+th {
+  font-size: 24px;
+  color: #ff84b1;
+}
+
+button {
+  background-color: #ff84b1;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  font-family: "gaegu";
+  font-size: 16px;
+  transition: background 0.3s;
+  padding: 5px 5px;
+}
+button:hover {
+  background-color: #ffd6df;
+  color: #ff84b1;
+  cursor: url(src/assets/hover.gif), pointer;
+}
+
+a {
+  color: #ff84b1;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+a:hover {
+  color: #ffd6df;
+  cursor: url(src/assets/hover.gif), pointer;
+}
+
+.logo {
+  filter: drop-shadow(5px 5px #ff84b1);
 }

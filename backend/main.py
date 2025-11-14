@@ -45,7 +45,7 @@ async def jsonReturns(request:Request):
 		return HTTPException(status_code = 400, detail = "Invalid input")
 
 
-@app.get("/search/{alias}")
+@app.get("/s/{alias}")
 async def searchAlias(alias):
     try:
         url = sqlite_helper.findURL(alias, db_file_path)
@@ -69,7 +69,7 @@ async def listAll():
 @app.delete("/delete/{alias}")
 async def deleteURL(alias):
     try:
-        sqlite_helper.deleteURL(alias)
+        sqlite_helper.deleteURL(alias, db_file_path)
         return ({"message": f"Deleted {alias}"})
     
     except:

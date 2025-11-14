@@ -1,9 +1,11 @@
 import './App.css'
-import { isValidElement, useState } from 'react'
+import { isValidElement, useState, useEffect } from 'react'
+import { fairyDustCursor } from "cursor-effects";
 
 function App() {
   const [url, setURL] = useState("")
   const [alias, setAlias] = useState("")
+  const [datalist, setDatalist] = useState([])
   const hostURL = "http://127.0.0.1:8000"
 
   class ValidationError extends Error {
@@ -23,12 +25,32 @@ function App() {
     }
   }
 
+  const handleDelete = async (alias) => {
+    try {
+      const response = await fetch(`${hostURL}/delete/${alias}`, {
+        method: "DELETE"
+      })
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete link. Status: ${response.status}`)
+      }
+
+      setDatalist(datalist.filter((item) => item.alias !== alias))
+      alert("Successfully deleted")
+    }
+
+    catch (error) {
+      alert("Something went wrong deleting")
+      console.error("Could not delete.", error)
+    }
+  }
+
   const handleUpload = async (e) => {
     e.preventDefault()
     const data = {url: url,}
 
     if (alias.length > 0) {
-      data.alias = alias;
+      data.alias = alias
     }
 
     try {
@@ -50,25 +72,65 @@ function App() {
 
       const result = await response.json()
       console.log(result)
+
+      data.alias = result.alias
+      data.link = `${hostURL}/s/${data.alias}`
+      setDatalist([...datalist, data])
     }
 
     catch (error) {
       if (error instanceof ValidationError){
         alert("URL is invalid")
-        return;
+        return
       }
 
       else{
-        console.error('Error uploading data:',error)
+        console.error('Error uploading data:', error)
         alert(`Alias is taken, try again`)
       }
     }
   }
+  
+  useEffect(() => {
+    new fairyDustCursor({
+      parent: document.body,  
+      colors: ["#ff84b1", "#ffe9eeff", "#ffa7c4ff"],
+      fairySymbol: "★",
+    });
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${hostURL}/all`)
+        const result = await response.json()
+
+        if (result && Array.isArray(result)) {
+          const updatedData = result.map(item => ({
+            ...item, 
+            link: `${hostURL}/s/${item.alias}`
+          }))
+
+          console.log(updatedData)
+          setDatalist(updatedData)
+        }
+
+        else {
+          setDatalist([])
+        }
+      }
+
+      catch (error) {
+        console.error("Something went wrong rendering data", error)
+      }
+    }
+    fetchData()
+  },[]) 
 
   return (
-    <div className="main-container">
+    <div className="main-container" style={{fontFamily: "gaegu, sans-serif"}}>
       <div id="header">
-        <h1>URL Shortener WOW!</h1>
+        <img src="src/assets/bow.png" className="image"/>
+        <img src="src/assets/logo.png" className="logo"/>
+        <img src="src/assets/bow.png" className="image"/>
       </div>
 
       <form onSubmit={handleUpload}>
@@ -77,7 +139,7 @@ function App() {
             <input 
               id="url"
               type="text"
-              placeholder="Enter URL"
+              placeholder="Enter URL - https://"
               value={url}
               onChange={(e) => setURL(e.target.value)}
             />
@@ -87,7 +149,7 @@ function App() {
             <input
               id="user-alias"
               type="text"
-              placeholder="Enter alias"
+              placeholder="Alias (optional)"
               value={alias}
               onChange={(e) => setAlias(e.target.value)}
             />
@@ -107,39 +169,21 @@ function App() {
               <th id="trash"></th>
             </tr>
           </thead>
+
           <tbody>
-            <tr>
-              <td id="url-display">https://google.com/</td>
-              <td id="alias-display">ggl</td>
-              <td><a id="link-display" href="https://google.com/" target="_blank">https://google.com/</a></td>
-              <td id="delete"><button>delete</button></td>
-            </tr>
-
-            <tr>
-              <td id="url-display">https://youtube.com/</td>
-              <td id="alias-display">yt</td>
-              <td><a id="link-display" href="https://youtube.com/" target="_blank">https://youtube.com/</a></td>
-              <td id="delete"><button>delete</button></td>
-            </tr>
-
-            <tr>
-              <td id="url-display">https://github.com/</td>
-              <td id="alias-display">gh</td>
-              <td><a id="link-display" href="https://github.com/" target="_blank">https://github.com/</a></td>
-              <td id="delete"><button>delete</button></td>
-            </tr>
-
-            <tr>
-              <td id="url-display">https://twitter.com/</td>
-              <td id="alias-display">twtr</td>
-              <td><a id="link-display" href="https://twitter.com/" target="_blank">https://twitter.com/</a></td>
-              <td id="delete"><button>delete</button></td>
-            </tr>
+            {datalist.map((data, index) => (
+              <tr key={index}>
+                <td>{data.url}</td>
+                <td>{data.alias}</td>
+                <td><a href={data.link} target="_blank">{data.link}</a></td>
+                <td><button onClick={() => handleDelete(data.alias)}>delete</button></td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
     </div>
-  )
+  ) 
 }
 
 export default App
