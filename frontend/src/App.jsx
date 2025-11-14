@@ -6,7 +6,7 @@ function App() {
   const [url, setURL] = useState("")
   const [alias, setAlias] = useState("")
   const [datalist, setDatalist] = useState([])
-  const hostURL = "http://127.0.0.1:8000"
+  const hostURL = "https://hearty-wonder-production.up.railway.app/"
 
   class ValidationError extends Error {
     constructor(message) {
