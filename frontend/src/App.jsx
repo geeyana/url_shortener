@@ -6,7 +6,7 @@ function App() {
   const [url, setURL] = useState("")
   const [alias, setAlias] = useState("")
   const [datalist, setDatalist] = useState([])
-  const hostURL = "https://hearty-wonder-production.up.railway.app/"
+  const hostURL = "https://hearty-wonder-production.up.railway.app"
 
   class ValidationError extends Error {
     constructor(message) {
