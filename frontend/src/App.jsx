@@ -128,9 +128,9 @@ function App() {
   return (
     <div className="main-container" style={{fontFamily: "gaegu, sans-serif"}}>
       <div id="header">
-        <img src="src/assets/bow.png" className="image"/>
-        <img src="src/assets/logo.png" className="logo"/>
-        <img src="src/assets/bow.png" className="image"/>
+        <img src="public/assets/bow.png" className="image"/>
+        <img src="public/assets/logo.png" className="logo"/>
+        <img src="public/assets/bow.png" className="image"/>
       </div>
 
       <form onSubmit={handleUpload}>

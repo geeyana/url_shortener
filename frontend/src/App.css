@@ -21,7 +21,7 @@
   flex-direction: column;
   align-items: center;
   border-top: 50px solid;
-  border-image-source: url(src/assets/lace.png);
+  border-image-source: url(public/assets/lace.png);
   border-image-slice: 200;
   border-image-repeat: repeat;
 }
@@ -44,7 +44,7 @@
   transition: box-shadow 0.3s;
 }
 #inputs-container input:hover {
-  cursor: url(src/assets/link.gif), auto;
+  cursor: url(public/assets/link.gif), auto;
   box-shadow: 3px 3px 3px white;
 }
 
@@ -97,7 +97,7 @@ button {
 button:hover {
   background-color: #ffd6df;
   color: #ff84b1;
-  cursor: url(src/assets/hover.gif), pointer;
+  cursor: url(public/assets/hover.gif), pointer;
 }
 
 a {
@@ -107,7 +107,7 @@ a {
 }
 a:hover {
   color: #ffd6df;
-  cursor: url(src/assets/hover.gif), pointer;
+  cursor: url(public/assets/hover.gif), pointer;
 }
 
 .logo {
